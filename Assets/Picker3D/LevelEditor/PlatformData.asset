@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204d1b0d1f56b4261a27706da6047170, type: 3}
+  m_Name: PlatformData
+  m_EditorClassIdentifier: 
+  flatRoad: {fileID: 1475249202067925815, guid: 80c6e6bb861514c84a235470eb37fd43,
+    type: 3}
+  cornerRoad: {fileID: 7306909117107654010, guid: cc8053f1f921948388ce403349c15835,
+    type: 3}
+  stageRoad: {fileID: 1109265764327332173, guid: 40868642d339f4fbb8f47fd7c4ebfeeb,
+    type: 3}
+  finishRoad: {fileID: 2243392683822619027, guid: f2932313a3f0645f196f024699e15b99,
+    type: 3}
