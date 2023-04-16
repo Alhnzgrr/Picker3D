@@ -2,6 +2,7 @@
 using Picker3D.Helper;
 using Picker3D.Road;
 using Picker3D.LevelSystem;
+using Picker3D.Scripts.Road;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Picker3D.LevelEditor
             Right,
             Left
         }
+
         private enum RoadType
         {
             Flat,
@@ -25,19 +27,26 @@ namespace Picker3D.LevelEditor
 
         [SerializeField] private PlatformData platformData;
         [SerializeField] private RoadType roadType;
-        [SerializeField, Min(4)] [ShowIf("roadType", RoadType.Flat)] private int lenght;
-        [SerializeField, Min(5)] [ShowIf("IsStage")] private int stageNecessaryAmount;
-        [SerializeField] [ShowIf("roadType", RoadType.Corner)] private DirectionType cornerDirection;
+
+        [SerializeField, Min(4)] [ShowIf("roadType", RoadType.Flat)]
+        private int lenght;
+
+        [SerializeField, Min(5)] [ShowIf("IsStage")]
+        private int stageNecessaryAmount;
+
+        [SerializeField] [ShowIf("roadType", RoadType.Corner)]
+        private DirectionType cornerDirection;
 
         private bool IsStage => roadType == RoadType.Stage || roadType == RoadType.Finish;
 
         private GameObject _levelX = null;
-        
+
         private Vector3 _lastObjectLocalPosition;
         private Vector3 _lastPosition;
         private Vector3 _direction = Vector3.forward;
-        
+
         private int _index;
+        private int _stageIndex;
         private float _currentAngle;
         private float _lastObjectScale;
         private bool _isFirstObject;
@@ -56,12 +65,13 @@ namespace Picker3D.LevelEditor
             {
                 _levelX = null;
             }
-            
+
             _lastObjectLocalPosition = Vector3.zero;
             _lastObjectScale = 0;
             _direction = Vector3.forward;
             _currentAngle = 0;
             _lastPosition = Vector3.zero;
+            _stageIndex = 0;
         }
 
         [Button]
@@ -81,12 +91,22 @@ namespace Picker3D.LevelEditor
             {
                 case RoadType.Corner:
 
-                    newObject = PrefabUtility.InstantiatePrefab(platformData.CornerRoad, _levelX.transform) as GameObject;
+                    if (cornerDirection == DirectionType.Left)
+                    {
+                        newObject =
+                            PrefabUtility.InstantiatePrefab(platformData.LeftCornerRoad, _levelX.transform) as GameObject;
+                    }
+                    else
+                    {
+                        newObject =
+                            PrefabUtility.InstantiatePrefab(platformData.RightCornerRoad, _levelX.transform) as GameObject;
+                    }
+
                     if (newObject != null)
                     {
-                        newObject.transform.rotation = cornerDirection == DirectionType.Left
-                            ? Quaternion.Euler(Vector3.up * (0 + _currentAngle))
-                            : Quaternion.Euler(Vector3.up * (270 + _currentAngle));
+                        // newObject.transform.rotation = cornerDirection == DirectionType.Left
+                        //     ? Quaternion.Euler(Vector3.up * (0 + _currentAngle))
+                        //     : Quaternion.Euler(Vector3.up * (270 + _currentAngle));
 
                         if (cornerDirection == DirectionType.Left)
                         {
@@ -130,7 +150,8 @@ namespace Picker3D.LevelEditor
                     break;
                 case RoadType.Stage:
 
-                    newObject = PrefabUtility.InstantiatePrefab(platformData.StageRoad, _levelX.transform) as GameObject;
+                    newObject = PrefabUtility.InstantiatePrefab(platformData.StageRoad,
+                        _levelX.transform) as GameObject;
 
                     if (newObject != null)
                     {
@@ -146,6 +167,13 @@ namespace Picker3D.LevelEditor
                             iStage.CollectAmount = stageNecessaryAmount;
                         }
 
+                        if (CatchHelper.TryGetComponentThisOrChild(newObject, out RoadController roadController))
+                        {
+                            roadController.IsStage = true;
+                            roadController.StageIndex = _stageIndex;
+                            _stageIndex++;
+                        }
+
                         _lastObjectLocalPosition = newObject.transform.localPosition;
                         _lastObjectScale = newObject.transform.localScale.z;
                         _lastPosition = newObject.transform.position + _direction * newObject.transform.localScale.z;
@@ -154,7 +182,8 @@ namespace Picker3D.LevelEditor
                     break;
                 case RoadType.Finish:
 
-                    newObject = PrefabUtility.InstantiatePrefab(platformData.FinishRoad, _levelX.transform) as GameObject;
+                    newObject =
+                        PrefabUtility.InstantiatePrefab(platformData.FinishRoad, _levelX.transform) as GameObject;
 
                     if (newObject != null)
                     {
@@ -168,6 +197,13 @@ namespace Picker3D.LevelEditor
                         if (CatchHelper.TryGetComponentThisOrChild(newObject, out IStage iStage))
                         {
                             iStage.CollectAmount = stageNecessaryAmount;
+                        }
+                        
+                        if (CatchHelper.TryGetComponentThisOrChild(newObject, out RoadController roadController))
+                        {
+                            roadController.IsStage = true;
+                            roadController.StageIndex = _stageIndex;
+                            _stageIndex++;
                         }
 
                         _lastObjectLocalPosition = newObject.transform.localPosition;
@@ -187,7 +223,7 @@ namespace Picker3D.LevelEditor
             Level level = _levelX.AddComponent<Level>();
             level.Angle = _currentAngle;
             level.LastPosition = _lastPosition;
-            
+
             _levelX.transform.parent = null;
             _levelX = null;
             _lastObjectLocalPosition = Vector3.zero;
@@ -195,6 +231,7 @@ namespace Picker3D.LevelEditor
             _direction = Vector3.forward;
             _currentAngle = 0;
             _lastPosition = Vector3.zero;
+            _stageIndex = 0;
         }
 
         private Vector3 RotateDirection(DirectionType directionType)

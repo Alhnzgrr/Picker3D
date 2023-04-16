@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace NET.Utility
+namespace Picker3D.Scripts.General
 {
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {

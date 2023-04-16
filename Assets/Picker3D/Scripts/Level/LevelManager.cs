@@ -1,11 +1,13 @@
 using System;
+using Picker3D.Scripts.General;
+using Picker3D.Scripts.Road;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Picker3D.LevelSystem
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : MonoSingleton<LevelManager>
     {
         [SerializeField] private Level[] levels;
         [SerializeField] private float levelsObjectScaleFactor;
@@ -35,7 +37,7 @@ namespace Picker3D.LevelSystem
             get => PlayerPrefs.GetInt("Stage", 1);
             set => PlayerPrefs.SetInt("Stage", value);
         }
-
+        
         private void Start()
         {
             int level = Level;

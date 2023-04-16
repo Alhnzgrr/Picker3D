@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Picker3D.LevelEditor
 {
@@ -6,12 +7,14 @@ namespace Picker3D.LevelEditor
     public class PlatformData : ScriptableObject
     {
         [SerializeField] private GameObject flatRoad;
-        [SerializeField] private GameObject cornerRoad;
+        [SerializeField] private GameObject leftCornerRoad;
+        [SerializeField] private GameObject rightCornerRoad;
         [SerializeField] private GameObject stageRoad;
         [SerializeField] private GameObject finishRoad;
 
         public GameObject FlatRoad => flatRoad;
-        public GameObject CornerRoad => cornerRoad;
+        public GameObject LeftCornerRoad => leftCornerRoad;
+        public GameObject RightCornerRoad => rightCornerRoad;
         public GameObject StageRoad => stageRoad;
         public GameObject FinishRoad => finishRoad;
     }

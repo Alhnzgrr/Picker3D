@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flatRoad: {fileID: 1475249202067925815, guid: 80c6e6bb861514c84a235470eb37fd43,
     type: 3}
-  cornerRoad: {fileID: 7306909117107654010, guid: cc8053f1f921948388ce403349c15835,
+  leftCornerRoad: {fileID: 7306909117107654010, guid: cc8053f1f921948388ce403349c15835,
+    type: 3}
+  rightCornerRoad: {fileID: 7306909117107654010, guid: 97b1eba877c304dee9a4aef09ff49cf2,
     type: 3}
   stageRoad: {fileID: 1109265764327332173, guid: 40868642d339f4fbb8f47fd7c4ebfeeb,
     type: 3}
