@@ -170,8 +170,6 @@ namespace Picker3D.LevelEditor
                         if (CatchHelper.TryGetComponentThisOrChild(newObject, out RoadController roadController))
                         {
                             roadController.IsStage = true;
-                            roadController.StageIndex = _stageIndex;
-                            _stageIndex++;
                         }
 
                         _lastObjectLocalPosition = newObject.transform.localPosition;
@@ -202,8 +200,7 @@ namespace Picker3D.LevelEditor
                         if (CatchHelper.TryGetComponentThisOrChild(newObject, out RoadController roadController))
                         {
                             roadController.IsStage = true;
-                            roadController.StageIndex = _stageIndex;
-                            _stageIndex++;
+                            
                         }
 
                         _lastObjectLocalPosition = newObject.transform.localPosition;

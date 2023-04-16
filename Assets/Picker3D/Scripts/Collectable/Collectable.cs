@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Collectable
@@ -7,7 +8,6 @@ namespace Picker3D.Scripts.Collectable
     {
         Rigidbody _rigidbody;
         public bool InPlayerArea { get; private set; } = false;
-        
         public bool InStageArea { get; private set; } = false;
 
         private void Awake()
@@ -18,7 +18,9 @@ namespace Picker3D.Scripts.Collectable
         public void Throw()
         {
             _rigidbody.velocity = Vector3.zero;
-            _rigidbody.AddForce(Vector3.forward * 75 , ForceMode.Impulse);
+            Vector3 pos = transform.position + Vector3.forward * 20 + Vector3.up * 0.5f;
+            _rigidbody.DOJump(pos, 1, 1, 0.75f);
+            // _rigidbody.AddForce(Vector3.forward * 75 , ForceMode.Impulse);
         }
 
         public void IsInArea(bool value)
@@ -29,6 +31,11 @@ namespace Picker3D.Scripts.Collectable
         public void IsInStageArea(bool value)
         {
             InStageArea = value;
+        }
+
+        public void Activate()
+        {
+            transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutElastic);
         }
     }
 }

@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   rightCornerRoad: {fileID: 7306909117107654010, guid: 97b1eba877c304dee9a4aef09ff49cf2,
     type: 3}
-  stageRoad: {fileID: 1109265764327332173, guid: 40868642d339f4fbb8f47fd7c4ebfeeb,
+  stageRoad: {fileID: 6692667414712306018, guid: 0812dd5ad3f61412da00e01a9161fe23,
     type: 3}
   finishRoad: {fileID: 2243392683822619027, guid: f2932313a3f0645f196f024699e15b99,
     type: 3}

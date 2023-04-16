@@ -45,6 +45,11 @@ namespace Picker3D.Scripts.Player
                 roadController.InteractionPlayer();
                 _verticalMove.WayPointUpdate(roadController.Points);
             }
+
+            if (other.TryGetComponent(out FlatController flatController))
+            {
+                flatController.SetActivateCollectables();
+            }
             
         }
 

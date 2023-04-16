@@ -9,19 +9,15 @@ namespace Picker3D.Scripts.Road
         [SerializeField] private Transform[] points;
         [SerializeField] private int stageIndex;
         [SerializeField] private bool isStage;
+        [SerializeField] private bool isFlat;
 
-        public int StageIndex
-        {
-            get => stageIndex;
-            set => stageIndex = value;
-        }
-
+        
         public bool IsStage
         {
             get => isStage;
             set => isStage = value;
         }
-        
+
         public bool IsInteraction { get; private set; }
 
         public void InteractionPlayer()
