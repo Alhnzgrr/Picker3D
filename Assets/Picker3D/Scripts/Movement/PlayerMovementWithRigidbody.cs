@@ -24,15 +24,16 @@ namespace Picker3D.Scripts.Movement
 
         private void Update()
         {
-            if(!GameManager.Instance.PlayAbility()) return;
-            
-            _rigidbody.velocity = new Vector3(UIController.Instance.GetHorizontal() * rotateSpeed,
-                _rigidbody.velocity.y, _rigidbody.velocity.z);
+            //if(!GameManager.Instance.PlayAbility()) return;
+
+            Vector3 velocity = transform.right * (UIController.Instance.GetHorizontal() * rotateSpeed);
+            velocity.y = _rigidbody.velocity.y;
+
+            _rigidbody.velocity = velocity;
             
             if(!_canMove) return;
             
-            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x,
-                _rigidbody.velocity.y, moveSpeed);
+            //_rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, moveSpeed);
         }
 
         public void CanMove(bool value)

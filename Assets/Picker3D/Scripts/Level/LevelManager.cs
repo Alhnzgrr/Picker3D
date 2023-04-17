@@ -53,7 +53,7 @@ namespace Picker3D.LevelSystem
 
         private void Start()
         {
-            var level = Level;
+            int level = Level;
             _lastLevelIndex = level;
             levels[level].gameObject.SetActive(true);
         }
@@ -76,15 +76,14 @@ namespace Picker3D.LevelSystem
         {
             Level++;
             int levelIndex = Level;
-            _lastLevelIndex = levelIndex;
 
             levels[levelIndex].gameObject.SetActive(true);
 
             if (levelIndex != 0)
             {
                 levels[levelIndex].transform.position = levels[_lastLevelIndex].LastPosition * levelsObjectScaleFactor;
+                _lastLevelIndex = levelIndex;
             }
-
         }
     }
 }

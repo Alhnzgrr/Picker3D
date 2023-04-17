@@ -167,7 +167,7 @@ namespace Picker3D.LevelEditor
                             iStage.CollectAmount = stageNecessaryAmount;
                         }
 
-                        if (CatchHelper.TryGetComponentThisOrChild(newObject, out RoadController roadController))
+                        if (CatchHelper.TryGetComponentThisOrChild(newObject, out Scripts.Road.RoadController roadController))
                         {
                             roadController.IsStage = true;
                         }
@@ -197,7 +197,7 @@ namespace Picker3D.LevelEditor
                             iStage.CollectAmount = stageNecessaryAmount;
                         }
                         
-                        if (CatchHelper.TryGetComponentThisOrChild(newObject, out RoadController roadController))
+                        if (CatchHelper.TryGetComponentThisOrChild(newObject, out Scripts.Road.RoadController roadController))
                         {
                             roadController.IsStage = true;
                             

@@ -32,7 +32,7 @@ namespace Picker3D.Scripts.Player
                 collectable.IsInArea(true);
             }
 
-            if (other.TryGetComponent(out RoadController roadController))
+            if (other.TryGetComponent(out Road.RoadController roadController))
             {
                 
                 if (roadController.IsInteraction) return;
