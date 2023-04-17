@@ -22,7 +22,7 @@ namespace Picker3D.Scripts.Collectable
             {
                 if(collectable.InStageArea) return;
                 
-                collectable.IsInStageArea(true);
+                collectable.IsInStageArea();
                 _stageRoad.CollectAmountUpdate();
             }
         }

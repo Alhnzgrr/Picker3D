@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -10,7 +11,7 @@ namespace Picker3D.Scripts.Collectable
         [SerializeField] private Collectable pyramidCollectable;
         [SerializeField] private float helicopterSpawnTime;
         [SerializeField] private float helicopterSpeed;
-        [SerializeField, Min(4), MaxValue(30)] private int spawnAmount;
+        [SerializeField, Min(4), MaxValue(50)] private int spawnAmount;
 
         private HelicopterVerticalMove _helicopterVerticalMove;
         
@@ -21,7 +22,7 @@ namespace Picker3D.Scripts.Collectable
         {
             _helicopterVerticalMove = GetComponentInParent<HelicopterVerticalMove>();
         }
-
+       
         private void Update()
         {
             if(!_canMove) return;
@@ -67,8 +68,7 @@ namespace Picker3D.Scripts.Collectable
 
             _canMove = false;
             _helicopterVerticalMove.CanMove = false;
-            
-            transform.DOLocalMoveY(50, 3f);
+            _helicopterVerticalMove.GetBackStartPosition();
         }
     }
 }

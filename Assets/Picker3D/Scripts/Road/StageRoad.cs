@@ -87,8 +87,21 @@ namespace Picker3D.Scripts.Road
             DoorOpenAction();
             stageCompleteUnityEvent?.Invoke();
             _eventData.OnStageCompete?.Invoke();
+            
+            StartCoroutine(ResetStage());
         }
 
+        private IEnumerator ResetStage()
+        {
+            yield return new WaitForSeconds(5);
+
+            totalAmount = 0;
+            leftDoor.transform.rotation = Quaternion.identity;
+            rightDoor.transform.rotation = Quaternion.identity;
+            transform.localPosition = Vector3.up * -0.5f;
+            amountText.text = $"{totalAmount} / {collectAmount}";
+        }
+            
         private void DoorOpenAction()
         {
             leftDoor.transform.DORotate(Vector3.forward * 60, .5f);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Picker3D.Scripts.General;
 using UnityEngine;
@@ -34,9 +35,41 @@ namespace Picker3D.Scripts.Collectable
             InPlayerArea = value;
         }
 
-        public void IsInStageArea(bool value)
+        public void IsInStageArea()
         {
-            InStageArea = value;
+            StartCoroutine(ResetStageAreaCoroutine());
+        }
+
+        private IEnumerator ResetStageAreaCoroutine()
+        {
+            InStageArea = true;
+            
+            yield return new WaitForSeconds(5);
+            
+            InStageArea = false;
+        }
+        private IEnumerator GetBackDefaultPositionCoroutine()
+        {
+            
+            yield return new WaitForSeconds(20);
+
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            
+            transform.rotation = Quaternion.identity;
+            transform.localPosition = _spawnPosition;
+        }
+
+        public void GetBackDefaultPosition()
+        {
+            StartCoroutine(GetBackDefaultPositionCoroutine());
+        }
+
+        public void InstantlyGetBackDefaultPosition()
+        {
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            transform.localPosition = _spawnPosition;
         }
 
         public void DestroyAfterLifeTime()

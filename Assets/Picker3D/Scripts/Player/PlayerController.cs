@@ -34,6 +34,7 @@ namespace Picker3D.Scripts.Player
 
             if (other.TryGetComponent(out RoadController roadController))
             {
+                
                 if (roadController.IsInteraction) return;
 
                 if (roadController.IsStage)
@@ -51,6 +52,7 @@ namespace Picker3D.Scripts.Player
                     if (CatchHelper.TryGetComponentThisOrChild(other.gameObject, out FlatController flatController))
                     {
                         flatController.SetActivateCollectables();
+                        flatController.ResetRoad();
                     }
                 }
 

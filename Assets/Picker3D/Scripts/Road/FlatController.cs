@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Picker3D.Scripts.Collectable;
 using Picker3D.Scripts.General;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,9 +25,19 @@ namespace Picker3D.Scripts.Road
         private HelicopterCollectableController _helicopterCollectableController;
         private BreakerSphereController _breakerSphereController;
 
+        private List<Collectable.Collectable> collectables = new List<Collectable.Collectable>();
+
         private void OnEnable()
         {
             GetCollectable().SetActive(true);
+        }
+
+        private void Start()
+        {
+            if (IsConstantCollectableType())
+            {
+                collectables.AddRange(GetCollectable().GetComponentsInChildren<Collectable.Collectable>());
+            }
         }
 
         private GameObject GetCollectable()
@@ -43,6 +54,12 @@ namespace Picker3D.Scripts.Road
 
                 _ => null
             };
+        }
+
+        private bool IsConstantCollectableType()
+        {
+            return flatCollectableType != FlatCollectableType.Helicopter &&
+                   flatCollectableType != FlatCollectableType.BreakerSphere;
         }
 
         public void SetActivateCollectables()
@@ -70,6 +87,14 @@ namespace Picker3D.Scripts.Road
                     _breakerSphereController.OnStartTaskBreakerSphere();
                     break;
                 }
+            }
+        }
+
+        public void ResetRoad()
+        {
+            foreach (var collectable in collectables)
+            {
+                collectable.GetBackDefaultPosition();
             }
         }
     }

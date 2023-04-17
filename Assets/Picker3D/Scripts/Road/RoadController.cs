@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Dreamteck.Splines;
 using UnityEngine;
 
@@ -18,7 +20,16 @@ namespace Picker3D.Scripts.Road
 
         public void InteractionPlayer()
         {
+            StartCoroutine(InteractionPlayerCoroutine());
+        }
+
+        private IEnumerator InteractionPlayerCoroutine()
+        {
             IsInteraction = true;
+            
+            yield return new WaitForSeconds(10);
+            
+            IsInteraction = false;
         }
     }
 }
