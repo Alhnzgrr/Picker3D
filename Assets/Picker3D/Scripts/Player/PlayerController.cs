@@ -1,8 +1,7 @@
-using System;
+using Picker3D.Helper;
 using Picker3D.Scripts.General;
 using Picker3D.Scripts.Movement;
 using Picker3D.Scripts.Road;
-using TMPro;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Player
@@ -32,22 +31,30 @@ namespace Picker3D.Scripts.Player
                 _collectableListController.AddList(collectable);
                 collectable.IsInArea(true);
             }
-            if(other.TryGetComponent(out RoadController roadController))
+
+            if (other.TryGetComponent(out RoadController roadController))
             {
                 if (roadController.IsInteraction) return;
 
                 if (roadController.IsStage)
                 {
+                    if (CatchHelper.TryGetComponentThisOrChild(other.gameObject, out StageRoad stageRoad))
+                    {
+                        stageRoad.CheckTotalAmount();
+                    }
+
                     _playerMovement.CanMove(false);
                     _collectableListController.StageAreaAction();
                 }
-                
-                roadController.InteractionPlayer();
-            }
+                else
+                {
+                    if (CatchHelper.TryGetComponentThisOrChild(other.gameObject, out FlatController flatController))
+                    {
+                        flatController.SetActivateCollectables();
+                    }
+                }
 
-            if (other.TryGetComponent(out FlatController flatController))
-            {
-                flatController.SetActivateCollectables();
+                roadController.InteractionPlayer();
             }
         }
 

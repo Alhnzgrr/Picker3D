@@ -2,6 +2,7 @@ using System;
 using Dreamteck.Splines;
 using Picker3D.Game;
 using Picker3D.LevelSystem;
+using Picker3D.Scripts.General;
 using Picker3D.Scripts.Road;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ namespace Picker3D.Scripts.Movement
 
         private void Update()
         {
+            if(!GameManager.Instance.PlayAbility()) return;
+            
             _rigidbody.velocity = new Vector3(UIController.Instance.GetHorizontal() * rotateSpeed,
                 _rigidbody.velocity.y, _rigidbody.velocity.z);
             

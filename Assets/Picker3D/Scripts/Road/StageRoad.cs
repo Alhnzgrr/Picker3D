@@ -54,6 +54,22 @@ namespace Picker3D.Scripts.Road
             }
         }
 
+        public void CheckTotalAmount()
+        {
+            StartCoroutine(CheckTotalAmountCoroutine());
+        }
+
+        private IEnumerator CheckTotalAmountCoroutine()
+        {
+            
+            yield return new WaitForSeconds(3f);
+
+            if (totalAmount < collectAmount)
+            {
+                _eventData.OnLoseLevel?.Invoke();
+            }
+        }
+
         private IEnumerator StageCompleteCoroutine()
         {
             yield return new WaitForSeconds(1f);

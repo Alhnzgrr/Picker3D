@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
-using Picker3D.Scripts.General;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -61,9 +58,11 @@ namespace Picker3D.Scripts.Collectable
             for (int i = 0; i < spawnAmount; i++)
             {
                 Collectable collectable = Instantiate(pyramidCollectable , transform.position , Quaternion.identity);
-                collectable.HelicopterCollectableThrowPyramid();
+                
+                collectable.DestroyAfterLifeTime();
 
                 yield return new WaitForSeconds(helicopterSpawnTime);
+                
             }
 
             _canMove = false;

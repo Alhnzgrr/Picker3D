@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using Picker3D.Scripts.General;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Picker3D.Scripts.Collectable
 {
     public class Collectable : MonoBehaviour
     {
-        Rigidbody _rigidbody;
+        private Rigidbody _rigidbody;
         public bool InPlayerArea { get; private set; } = false;
         public bool InStageArea { get; private set; } = false;
 
@@ -38,14 +39,9 @@ namespace Picker3D.Scripts.Collectable
             InStageArea = value;
         }
 
-        public void HelicopterCollectableThrowPyramid()
+        public void DestroyAfterLifeTime()
         {
-            //_rigidbody.AddForce(Vector3.down * 5 , ForceMode.Impulse);
-        }
-
-        public void OnEndTask()
-        {
-            
+            Destroy(gameObject , 20);
         }
     }
 }

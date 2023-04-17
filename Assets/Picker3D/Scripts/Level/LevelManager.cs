@@ -16,7 +16,8 @@ namespace Picker3D.LevelSystem
         private Level _lastLevel;
 
         private int _lastLevelIndex;
-        
+        private EventData _eventData;
+
         private int Level
         {
             get => PlayerPrefs.GetInt("Level") > levels.Length
@@ -32,17 +33,43 @@ namespace Picker3D.LevelSystem
             }
         }
         public int RealLevel => PlayerPrefs.GetInt("RealLevel", 1);
-        public int Stage
+
+        private int Stage
         {
             get => PlayerPrefs.GetInt("Stage", 1);
             set => PlayerPrefs.SetInt("Stage", value);
         }
-        
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _eventData = Resources.Load("EventData") as EventData;
+        }
+
+        private void OnEnable()
+        {
+            _eventData.OnStageCompete += OnStageCompete;
+        }
+
         private void Start()
         {
-            int level = Level;
+            var level = Level;
             _lastLevelIndex = level;
             levels[level].gameObject.SetActive(true);
+        }
+        
+        private void OnDisable()
+        {
+            _eventData.OnStageCompete -= OnStageCompete;
+        }
+        
+        private void OnStageCompete()
+        {
+            Stage++;
+            if (Stage >= 3)
+            {
+                Stage = 0;
+            }
         }
 
         private void NextLevel()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Picker3D.Scripts.Collectable;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Player
