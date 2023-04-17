@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Picker3D.Road;
 using Picker3D.Scripts.General;
@@ -13,7 +14,7 @@ namespace Picker3D.Scripts.Road
 {
     public class StageRoad : MonoBehaviour, IStage
     {
-        [SerializeField] private GameObject door;
+        [SerializeField] private GameObject leftDoor , rightDoor;
         [SerializeField] private int collectAmount;
         [SerializeField] private UnityEvent stageCompleteUnityEvent;
         [SerializeField] private TextMeshPro amountText;
@@ -49,25 +50,33 @@ namespace Picker3D.Scripts.Road
             amountText.text = $"{totalAmount} / {collectAmount}";
             if (totalAmount >= collectAmount)
             {
-                StageComplete();
-            }
-        }
-
-        public void StageComplete()
-        {
-            transform.DOLocalMoveY(0f, 1f).OnComplete(() =>
-            {
                 StartCoroutine(StageCompleteCoroutine());
-            });
+            }
         }
 
         private IEnumerator StageCompleteCoroutine()
         {
+            yield return new WaitForSeconds(1f);
+            
+            transform.DOLocalMoveY(0f, 0.5f).OnComplete(() =>
+            {
+                StartCoroutine(OnEndTastCoroutine());
+            });
+        }
+
+        private IEnumerator OnEndTastCoroutine()
+        {
             yield return new WaitForSeconds(0.5f);
 
-            door.transform.DOLocalMoveX(2, 0.25f);
+            DoorOpenAction();
             stageCompleteUnityEvent?.Invoke();
             _eventData.OnStageCompete?.Invoke();
+        }
+
+        private void DoorOpenAction()
+        {
+            leftDoor.transform.DORotate(Vector3.forward * 60, .5f);
+            rightDoor.transform.DORotate(Vector3.forward * -60, .5f);
         }
     }
 }

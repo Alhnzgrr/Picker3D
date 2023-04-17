@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Sirenix.Utilities;
+using Picker3D.Scripts.Collectable;
+using Picker3D.Scripts.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Picker3D.Scripts.Road
 {
@@ -12,62 +14,83 @@ namespace Picker3D.Scripts.Road
         [SerializeField] private GameObject cubeCollectables;
         [SerializeField] private GameObject emojiCollectables;
         [SerializeField] private GameObject sphereCollectables;
-        [SerializeField] private FlatCollectableType flatCollectableType;
+        [SerializeField] private GameObject duckCollectables;
+        [SerializeField] private GameObject helicopterCollectables;
+        [SerializeField] private GameObject breakerSphereCollectable;
+        
+        [SerializeField] private FgEnum.FlatCollectableType flatCollectableType;
+
+        private HelicopterCollectableController _helicopterCollectableController;
+        private BreakerSphereController _breakerSphereController;
 
         private List<Collectable.Collectable> collectables = new List<Collectable.Collectable>();
 
-        private void Start()
+        private void OnEnable()
         {
-            AddCollectable();
+            GetCollectable().SetActive(true);
+            //AddCollectable();
         }
 
         private GameObject GetCollectable()
         {
             return flatCollectableType switch
             {
-                FlatCollectableType.Cube => cubeCollectables,
-                FlatCollectableType.Pyramid => pyramidCollectables,
-                FlatCollectableType.Emoji => emojiCollectables,
-                FlatCollectableType.Sphere => sphereCollectables,
+                FgEnum.FlatCollectableType.Cube => cubeCollectables,
+                FgEnum.FlatCollectableType.Pyramid => pyramidCollectables,
+                FgEnum.FlatCollectableType.Emoji => emojiCollectables,
+                FgEnum.FlatCollectableType.Sphere => sphereCollectables,
+                FgEnum.FlatCollectableType.Duck => duckCollectables,
+                FgEnum.FlatCollectableType.BreakerSphere => breakerSphereCollectable,
+                FgEnum.FlatCollectableType.Helicopter => helicopterCollectables,
+
                 _ => null
             };
         }
 
-        public void AddCollectable()
+        private void AddCollectable()
         {
-            GetCollectable().SetActive(true);
+            if (collectables.Count > 0)
+            {
+                for (int i = 0; i < collectables.Count; i++)
+                {
+                    Collectable.Collectable collectable = collectables[0];
+                    collectables.Remove(collectable);
+                }
+            }
             
             collectables.AddRange(GetCollectable().GetComponentsInChildren<Collectable.Collectable>());
             
-            SetVisibility();
-            GetCollectable().SetActive(false);
-        }
-
-        public void SetVisibility()
-        {
-            foreach (var collectable in collectables)
-            {
-                collectable.transform.localScale = Vector3.zero;
-            }
         }
 
         public void SetActivateCollectables()
         {
-            GetCollectable().SetActive(true);
-            
-            foreach (var collectable in collectables)
+            switch (flatCollectableType)
             {
-                collectable.gameObject.SetActive(true);
-                collectable.Activate();
+                case FgEnum.FlatCollectableType.Helicopter:
+                {
+                    if (!_helicopterCollectableController)
+                    {
+                        _helicopterCollectableController = GetComponentInChildren<HelicopterCollectableController>();
+                    }
+                
+                    _helicopterCollectableController.OnStartTastHelicopter();
+                    break;
+                }
+                case FgEnum.FlatCollectableType.BreakerSphere:
+                {
+                    if (!_breakerSphereController)
+                    {
+                        _breakerSphereController =
+                            GetComponentInChildren<BreakerSphereController>();
+                    }
+                    
+                    _breakerSphereController.OnStartTaskBreakerSphere();
+                    
+                    break;
+                }
             }
         }
     }
 
-    public enum FlatCollectableType
-    {
-        Cube,
-        Emoji,
-        Pyramid,
-        Sphere
-    }
+    
 }

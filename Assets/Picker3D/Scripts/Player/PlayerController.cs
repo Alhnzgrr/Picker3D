@@ -10,13 +10,13 @@ namespace Picker3D.Scripts.Player
     public class PlayerController : MonoBehaviour
     {
         private EventData _eventData;
-        private VerticalMove _verticalMove;
+        private PlayerMovementWithRigidbody _playerMovement;
         private CollectableListController _collectableListController;
 
         private void Awake()
         {
             _eventData = Resources.Load("EventData") as EventData;
-            _verticalMove = GetComponent<VerticalMove>();
+            _playerMovement = GetComponent<PlayerMovementWithRigidbody>();
             _collectableListController = GetComponent<CollectableListController>();
         }
 
@@ -38,19 +38,17 @@ namespace Picker3D.Scripts.Player
 
                 if (roadController.IsStage)
                 {
-                    _verticalMove.CanMove(false);
+                    _playerMovement.CanMove(false);
                     _collectableListController.StageAreaAction();
                 }
                 
                 roadController.InteractionPlayer();
-                _verticalMove.WayPointUpdate(roadController.Points);
             }
 
             if (other.TryGetComponent(out FlatController flatController))
             {
                 flatController.SetActivateCollectables();
             }
-            
         }
 
         private void OnTriggerExit(Collider other)
@@ -69,7 +67,7 @@ namespace Picker3D.Scripts.Player
 
         private void OnStageCompete()
         {
-            _verticalMove.CanMove(true);
+            _playerMovement.CanMove(true);
         }
     }
 }

@@ -190,8 +190,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.5, z: 0.75}
-  m_Center: {x: 0, y: 0.5, z: -1.5}
+  m_Size: {x: 2, y: 2, z: 0.75}
+  m_Center: {x: 0, y: 1, z: -1.5}
 --- !u!54 &-179510777924474156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -220,7 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de27a387475b44d6488c73b270a91860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 0}
+  leftDoor: {fileID: 0}
+  rightDoor: {fileID: 0}
   collectAmount: 7
   stageCompleteUnityEvent:
     m_PersistentCalls:
@@ -262,10 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3529b18274b44298e0135cf2486b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 8177163986111351888}
-  - {fileID: 5774369217458208965}
-  stageIndex: 0
   isStage: 1
 --- !u!1 &1909501044317653507
 GameObject:
