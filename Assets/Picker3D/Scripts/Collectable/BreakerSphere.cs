@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Collectable

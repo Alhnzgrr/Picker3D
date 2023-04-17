@@ -38,6 +38,11 @@ namespace Picker3D.Scripts.Collectable
             InStageArea = value;
         }
 
+        public void HelicopterCollectableThrowPyramid()
+        {
+            //_rigidbody.AddForce(Vector3.down * 5 , ForceMode.Impulse);
+        }
+
         public void OnEndTask()
         {
             

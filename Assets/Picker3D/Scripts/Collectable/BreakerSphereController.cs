@@ -21,7 +21,7 @@ namespace Picker3D.Scripts.Collectable
         {
             for (int i = 0; i < breakerSpheres.Length; i++)
             {
-                yield return new WaitForSeconds(1.75f);
+                yield return new WaitForSeconds(2.25f);
 
                 breakerSpheres[i].OnStartTask();
                 

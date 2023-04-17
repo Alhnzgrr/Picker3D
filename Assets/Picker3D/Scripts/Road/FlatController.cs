@@ -74,7 +74,9 @@ namespace Picker3D.Scripts.Road
                     }
                 
                     _helicopterCollectableController.OnStartTastHelicopter();
+                    
                     break;
+                    
                 }
                 case FgEnum.FlatCollectableType.BreakerSphere:
                 {
