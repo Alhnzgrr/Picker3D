@@ -67,6 +67,11 @@ namespace Picker3D.Scripts.Player
                 _collectableListController.RemoveList(collectable);
                 collectable.IsInArea(false);
             }
+            
+            if(other.TryGetComponent(out RoadController roadController))
+            {
+                roadController.OnResetValues();
+            }
         }
 
         private void OnDisable()

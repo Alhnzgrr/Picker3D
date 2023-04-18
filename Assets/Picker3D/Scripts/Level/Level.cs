@@ -4,12 +4,12 @@ namespace Picker3D.LevelSystem
 {
     public class Level : MonoBehaviour
     {
-        [SerializeField] private Vector3 lastPosition;
+        [SerializeField] private Transform lastPosition;
         [SerializeField] private float angle;
 
-        public Vector3 LastPosition
+        public Transform LastPosition
         {
-            get => lastPosition + transform.position;
+            get => lastPosition;
             set => lastPosition = value;
         }
 

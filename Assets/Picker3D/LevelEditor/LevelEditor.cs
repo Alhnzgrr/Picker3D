@@ -249,7 +249,11 @@ namespace Picker3D.LevelEditor
         {
             Level level = _levelX.AddComponent<Level>();
             level.Angle = _currentAngle;
-            level.LastPosition = _lastPosition;
+            
+            Transform newTransform = new GameObject("RefEndPosition").transform;
+            newTransform.parent = level.transform;
+            newTransform.position = _lastPosition;
+            level.LastPosition = newTransform;
 
             _levelX.transform.parent = null;
             _levelX = null;

@@ -9,7 +9,7 @@ namespace Picker3D.Scripts.General
         public Action OnPlay { get; set; }
         public Action OnFinishLevel { get; set; }
         public Action OnLoseLevel { get; set; }
-        
         public Action OnStageCompete { get; set; }
+        public Action OnResetValues{ get; set; }
     }
 }

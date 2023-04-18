@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Picker3D.Scripts.General;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace Picker3D.Scripts.Collectable
         {
             _helicopterVerticalMove = GetComponentInParent<HelicopterVerticalMove>();
         }
-       
+
         private void Update()
         {
             if(!_canMove) return;

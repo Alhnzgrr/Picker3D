@@ -23,7 +23,8 @@ namespace Picker3D.Scripts.Road
         private EventData _eventData;
         private RoadController _roadController;
 
-        private int totalAmount;
+        private int _totalAmount;
+        private bool _stageComplete = false;
 
         public int CollectAmount
         {
@@ -39,20 +40,23 @@ namespace Picker3D.Scripts.Road
 
         private void OnEnable()
         {
-            amountText.text = $"{totalAmount} / {collectAmount}";
+            _eventData.OnResetValues += OnResetValues;
+            amountText.text = $"{_totalAmount} / {collectAmount}";
         }
 
         private void OnDisable()
         {
-            totalAmount = 0;
+            _eventData.OnResetValues += OnResetValues;
+            _totalAmount = 0;
         }
 
         public void CollectAmountUpdate()
         {
-            totalAmount++;
-            amountText.text = $"{totalAmount} / {collectAmount}";
-            if (totalAmount >= collectAmount)
+            _totalAmount++;
+            amountText.text = $"{_totalAmount} / {collectAmount}";
+            if (_totalAmount >= collectAmount && !_stageComplete)
             {
+                _stageComplete = true;
                 StartCoroutine(StageCompleteCoroutine());
             }
         }
@@ -67,7 +71,7 @@ namespace Picker3D.Scripts.Road
             
             yield return new WaitForSeconds(3f);
 
-            if (totalAmount < collectAmount)
+            if (_totalAmount < collectAmount)
             {
                 _eventData.OnLoseLevel?.Invoke();
             }
@@ -90,21 +94,28 @@ namespace Picker3D.Scripts.Road
             DoorOpenAction();
             stageCompleteUnityEvent?.Invoke();
             _eventData.OnStageCompete?.Invoke();
-            
-            if(_roadController.IsFinish) _eventData.OnFinishLevel?.Invoke();
-            
+
+            if (_roadController.IsFinish)
+            {
+                _eventData.OnFinishLevel?.Invoke();
+            }
+        }
+        
+        private void OnResetValues()
+        {
             StartCoroutine(ResetStage());
         }
-
+        
         private IEnumerator ResetStage()
         {
             yield return new WaitForSeconds(5);
 
-            totalAmount = 0;
+            _totalAmount = 0;
             leftDoor.transform.rotation = Quaternion.identity;
             rightDoor.transform.rotation = Quaternion.identity;
             transform.localPosition = Vector3.up * -0.5f;
-            amountText.text = $"{totalAmount} / {collectAmount}";
+            amountText.text = $"{_totalAmount} / {collectAmount}";
+            _stageComplete = false;
         }
             
         private void DoorOpenAction()

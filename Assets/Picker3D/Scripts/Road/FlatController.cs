@@ -22,13 +22,21 @@ namespace Picker3D.Scripts.Road
         
         [SerializeField] private FlatCollectableType flatCollectableType;
 
+        private EventData _eventData;
         private HelicopterCollectableController _helicopterCollectableController;
         private BreakerSphereController _breakerSphereController;
 
         private List<Collectable.Collectable> collectables = new List<Collectable.Collectable>();
 
+        private void Awake()
+        {
+            _eventData = Resources.Load("EventData") as EventData;
+        }
+
         private void OnEnable()
         {
+            _eventData.OnResetValues += ResetRoad;
+            
             GetCollectable().SetActive(true);
         }
 
@@ -38,6 +46,11 @@ namespace Picker3D.Scripts.Road
             {
                 collectables.AddRange(GetCollectable().GetComponentsInChildren<Collectable.Collectable>());
             }
+        }
+
+        private void OnDisable()
+        {
+            _eventData.OnResetValues -= ResetRoad;
         }
 
         private GameObject GetCollectable()

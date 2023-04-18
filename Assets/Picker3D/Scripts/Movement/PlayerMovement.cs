@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening.Core;
 using Picker3D.Game;
 using Picker3D.Scripts.General;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Picker3D.Scripts.Movement
     {
         [SerializeField] private float verticalSpeed;
         [SerializeField] private float horizontalSpeed;
+        [SerializeField] private float boundary;
 
         private Rigidbody _rigidbody;
 
@@ -24,11 +26,37 @@ namespace Picker3D.Scripts.Movement
         {
             if (!GameManager.Instance.PlayAbility() || !_canMove)
             {
-                _rigidbody.velocity = new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, 0);
-                return;
+                _rigidbody.velocity = Vector3.zero;
+            }
+            else
+            {
+                Move();
             }
 
-            _rigidbody.velocity = new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, verticalSpeed);
+            // if (CanHorizontalMove())
+            // {
+            //     _rigidbody.velocity =
+            //         new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, verticalSpeed);
+            // }
+            // else
+            // {
+            //     _rigidbody.velocity = Vector3.forward * verticalSpeed;
+            // }
+        }
+
+        private void Move()
+        {
+            if (CanHorizontalMove())
+            {
+                _rigidbody.velocity = new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, verticalSpeed);
+            }
+            else
+            {
+                _rigidbody.velocity = new Vector3(0, 0, verticalSpeed);
+            }
+            
+            Debug.Log(CanHorizontalMove());
+
         }
 
         public void CanMove(bool value)
@@ -36,6 +64,17 @@ namespace Picker3D.Scripts.Movement
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
             _canMove = value;
+        }
+
+        private bool CanHorizontalMove()
+        {
+            if (transform.position.x <= -boundary && UIController.Instance.GetHorizontal() < 0 ||
+                transform.position.x >= boundary && UIController.Instance.GetHorizontal() > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

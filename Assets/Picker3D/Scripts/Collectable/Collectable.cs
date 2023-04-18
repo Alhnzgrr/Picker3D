@@ -48,21 +48,14 @@ namespace Picker3D.Scripts.Collectable
             
             InStageArea = false;
         }
-        private IEnumerator GetBackDefaultPositionCoroutine()
-        {
-            
-            yield return new WaitForSeconds(20);
 
+        public void GetBackDefaultPosition()
+        {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
             
             transform.rotation = Quaternion.identity;
             transform.localPosition = _spawnPosition;
-        }
-
-        public void GetBackDefaultPosition()
-        {
-            StartCoroutine(GetBackDefaultPositionCoroutine());
         }
 
         public void InstantlyGetBackDefaultPosition()

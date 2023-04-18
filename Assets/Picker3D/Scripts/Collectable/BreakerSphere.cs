@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using Picker3D.Scripts.General;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Collectable
@@ -10,8 +12,24 @@ namespace Picker3D.Scripts.Collectable
         [SerializeField] private GameObject bigSphere;
         [SerializeField] private GameObject[] collectables;
 
+        private EventData _eventData;
         private Vector3 bigSphereDefaultPosition;
-        
+
+        private void Awake()
+        {
+            _eventData = Resources.Load("EventData") as EventData;
+        }
+
+        private void OnEnable()
+        {
+            _eventData.OnResetValues += OnEndTask;
+        }
+
+        private void OnDisable()
+        {
+            _eventData.OnResetValues -= OnEndTask;
+        }
+
         public void OnStartTask()
         {
             bigSphereDefaultPosition = bigSphere.transform.localPosition;
@@ -21,16 +39,6 @@ namespace Picker3D.Scripts.Collectable
             {
                 collectable.SetActive(true);
             }
-
-            StartCoroutine(OnEndTaskCoroutine());
-            
-        }
-
-        private IEnumerator OnEndTaskCoroutine()
-        {
-            yield return new WaitForSeconds(20);
-            
-            OnEndTask();
         }
         
         private void OnEndTask()

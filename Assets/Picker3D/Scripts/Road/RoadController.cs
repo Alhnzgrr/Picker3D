@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Dreamteck.Splines;
+using Picker3D.Scripts.General;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Road
@@ -10,6 +11,10 @@ namespace Picker3D.Scripts.Road
     {
         [SerializeField] private bool isStage;
         [SerializeField] private bool isFinish;
+
+        private EventData _eventData;
+
+        
 
         public bool IsStage
         {
@@ -25,18 +30,29 @@ namespace Picker3D.Scripts.Road
 
         public bool IsInteraction { get; private set; }
 
-        public void InteractionPlayer()
+        // private void Awake()
+        // {
+        //     _eventData = Resources.Load("EventData") as EventData;
+        // }
+        //
+        // private void OnEnable()
+        // {
+        //     _eventData.OnResetValues += OnResetValues;
+        // }
+        //
+        // private void OnDisable()
+        // {
+        //     _eventData.OnResetValues -= OnResetValues;
+        // }
+
+        public void OnResetValues()
         {
-            StartCoroutine(InteractionPlayerCoroutine());
+            IsInteraction = false;
         }
 
-        private IEnumerator InteractionPlayerCoroutine()
+        public void InteractionPlayer()
         {
             IsInteraction = true;
-            
-            yield return new WaitForSeconds(10);
-            
-            IsInteraction = false;
         }
     }
 }

@@ -1,8 +1,5 @@
-using System;
 using Picker3D.Scripts.General;
-using Picker3D.Scripts.Road;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Picker3D.LevelSystem
@@ -20,19 +17,9 @@ namespace Picker3D.LevelSystem
 
         private int Level
         {
-            get => PlayerPrefs.GetInt("Level") > levels.Length
-                ? Random.Range(randomLevelLowerLimit, levels.Length)
-                : PlayerPrefs.GetInt("Level", 1);
-            set
-            {
-                PlayerPrefs.SetInt("RealLevel", value);
-                if (levels.Length >= value)
-                {
-                    PlayerPrefs.SetInt("Level", value);
-                }
-            }
+            get => PlayerPrefs.GetInt("Level");
+            set => PlayerPrefs.SetInt("Level", value);
         }
-        public int RealLevel => PlayerPrefs.GetInt("RealLevel", 1);
 
         private int Stage
         {
@@ -49,20 +36,30 @@ namespace Picker3D.LevelSystem
         private void OnEnable()
         {
             _eventData.OnStageCompete += OnStageCompete;
+            _eventData.OnFinishLevel += OnFinishLevel;
         }
 
         private void Start()
         {
-            int level = Level;
-            _lastLevelIndex = level;
-            levels[level].gameObject.SetActive(true);
+            _lastLevelIndex = _level;
+            GetNextLevel(ref _level);
+            levels[_level].gameObject.SetActive(true);
         }
-        
+
         private void OnDisable()
         {
             _eventData.OnStageCompete -= OnStageCompete;
+            _eventData.OnFinishLevel -= OnFinishLevel;
         }
-        
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                NextLevel();
+            }
+        }
+
         private void OnStageCompete()
         {
             Stage++;
@@ -72,17 +69,39 @@ namespace Picker3D.LevelSystem
             }
         }
 
+        private void OnFinishLevel()
+        {
+            NextLevel();
+        }
+
+        private int _level;
+
         private void NextLevel()
         {
+            _lastLevelIndex = _level;
             Level++;
-            int levelIndex = Level;
+            GetNextLevel(ref _level);
 
-            levels[levelIndex].gameObject.SetActive(true);
+            levels[_level].gameObject.SetActive(true);
 
-            if (levelIndex != 0)
+            levels[_level].transform.position = levels[_lastLevelIndex].LastPosition.position;
+        }
+
+        private void GetNextLevel(ref int currentLevel)
+        {
+            if (Level >= levels.Length)
             {
-                levels[levelIndex].transform.position = levels[_lastLevelIndex].LastPosition * levelsObjectScaleFactor;
-                _lastLevelIndex = levelIndex;
+                int tempLevel = currentLevel;
+                while (tempLevel == currentLevel)
+                {
+                    // Get level until not equal to last level when level returning random
+
+                    currentLevel = Random.Range(0, levels.Length);
+                }
+            }
+            else
+            {
+                currentLevel = Level;
             }
         }
     }

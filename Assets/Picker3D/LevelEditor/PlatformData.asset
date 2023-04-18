@@ -20,5 +20,5 @@ MonoBehaviour:
     type: 3}
   stageRoad: {fileID: 6692667414712306018, guid: 0812dd5ad3f61412da00e01a9161fe23,
     type: 3}
-  finishRoad: {fileID: 2243392683822619027, guid: f2932313a3f0645f196f024699e15b99,
+  finishRoad: {fileID: 6940645709014890610, guid: 354b832fa6bfd467b93eabb522edd888,
     type: 3}
