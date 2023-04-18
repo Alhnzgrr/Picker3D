@@ -9,13 +9,13 @@ namespace Picker3D.Scripts.Player
     public class PlayerController : MonoBehaviour
     {
         private EventData _eventData;
-        private PlayerMovementWithRigidbody _playerMovement;
+        private PlayerMovement _playerMovement;
         private CollectableListController _collectableListController;
 
         private void Awake()
         {
             _eventData = Resources.Load("EventData") as EventData;
-            _playerMovement = GetComponent<PlayerMovementWithRigidbody>();
+            _playerMovement = GetComponent<PlayerMovement>();
             _collectableListController = GetComponent<CollectableListController>();
         }
 
@@ -36,7 +36,7 @@ namespace Picker3D.Scripts.Player
             {
                 
                 if (roadController.IsInteraction) return;
-
+                
                 if (roadController.IsStage)
                 {
                     if (CatchHelper.TryGetComponentThisOrChild(other.gameObject, out StageRoad stageRoad))

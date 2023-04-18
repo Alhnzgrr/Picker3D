@@ -8,8 +8,8 @@ namespace Picker3D.Scripts.Road
 {
     public class RoadController : MonoBehaviour
     {
-        [SerializeField] private List<Transform> points;
         [SerializeField] private bool isStage;
+        [SerializeField] private bool isFinish;
 
         public bool IsStage
         {
@@ -17,10 +17,10 @@ namespace Picker3D.Scripts.Road
             set => isStage = value;
         }
 
-        public List<Transform> Points
+        public bool IsFinish
         {
-            get => points;
-            set => points = value;
+            get => isFinish;
+            set => isFinish = value;
         }
 
         public bool IsInteraction { get; private set; }

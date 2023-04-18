@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using JetBrains.Annotations;
 using Picker3D.Road;
 using Picker3D.Scripts.General;
 using TMPro;
@@ -20,6 +21,7 @@ namespace Picker3D.Scripts.Road
         [SerializeField] private TextMeshPro amountText;
 
         private EventData _eventData;
+        private RoadController _roadController;
 
         private int totalAmount;
 
@@ -32,6 +34,7 @@ namespace Picker3D.Scripts.Road
         private void Awake()
         {
             _eventData = Resources.Load("EventData") as EventData;
+            _roadController = GetComponentInParent<RoadController>();
         }
 
         private void OnEnable()
@@ -87,6 +90,8 @@ namespace Picker3D.Scripts.Road
             DoorOpenAction();
             stageCompleteUnityEvent?.Invoke();
             _eventData.OnStageCompete?.Invoke();
+            
+            if(_roadController.IsFinish) _eventData.OnFinishLevel?.Invoke();
             
             StartCoroutine(ResetStage());
         }
