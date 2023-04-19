@@ -2,6 +2,7 @@
 using Picker3D.Helper;
 using Picker3D.Road;
 using Picker3D.LevelSystem;
+using Picker3D.Scripts.General;
 using Picker3D.Scripts.Road;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -28,8 +29,12 @@ namespace Picker3D.LevelEditor
         [SerializeField] private PlatformData platformData;
         [SerializeField] private RoadType roadType;
 
-        [SerializeField, Min(4)] [ShowIf("roadType", RoadType.Flat)]
+        [SerializeField, Min(4)]
+        [ShowIf("roadType", RoadType.Flat)]
         private int lenght;
+        
+        [SerializeField] [ShowIf("roadType", RoadType.Flat)]
+        private FlatCollectableType collectableType;
 
         [SerializeField, Min(5)] [ShowIf("IsStage")]
         private int stageNecessaryAmount;
@@ -103,6 +108,11 @@ namespace Picker3D.LevelEditor
 
                         if (newObject != null)
                         {
+                            if (CatchHelper.TryGetComponentThisOrChild(newObject, out FlatController flatController))
+                            {
+                                flatController.GetFlatType(collectableType);
+                            }
+                            
                             Vector3 localScale = newObject.transform.localScale;
                             localScale = new Vector3(localScale.x, localScale.y, lenght);
                             newObject.transform.localScale = localScale;
@@ -110,6 +120,7 @@ namespace Picker3D.LevelEditor
                             float distance = _lastObjectScale + newObject.transform.localScale.z;
                             newObject.transform.localPosition = _lastObjectLocalPosition + _direction * distance;
                             newObject.transform.rotation = Quaternion.Euler(Vector3.up * _currentAngle);
+                            
                             _lastObjectLocalPosition = newObject.transform.localPosition;
                             _lastObjectScale = newObject.transform.localScale.z;
                             _lastPosition = newObject.transform.position +

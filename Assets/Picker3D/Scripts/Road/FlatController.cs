@@ -100,7 +100,6 @@ namespace Picker3D.Scripts.Road
                             GetComponentInChildren<BreakerSphereController>();
                     }
 
-                    // _breakerSphereController.OnStartTaskBreakerSphere();
                     break;
                 }
             }
@@ -112,6 +111,11 @@ namespace Picker3D.Scripts.Road
             {
                 collectable.GetBackDefaultPosition();
             }
+        }
+
+        public void GetFlatType(FlatCollectableType type)
+        {
+            flatCollectableType = type;
         }
     }
 
