@@ -39,13 +39,15 @@ namespace Picker3D.LevelEditor
         [SerializeField] [ShowIf("roadType", RoadType.Flat)]
         private bool skillUsing;
         
-        [SerializeField] [ShowIf("roadType", RoadType.Flat)]
+        [SerializeField] [ShowIf("IsSkillUsing")]
         private SkillPosition skillPosition;
 
         [SerializeField, Min(5)] [ShowIf("IsStage")]
         private int stageNecessaryAmount;
        
         private bool IsStage => roadType == RoadType.Stage || roadType == RoadType.Finish;
+
+        private bool IsSkillUsing => roadType == RoadType.Flat && skillUsing;
 
         private GameObject _levelX = null;
 

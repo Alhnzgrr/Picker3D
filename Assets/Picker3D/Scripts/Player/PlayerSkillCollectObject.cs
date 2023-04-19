@@ -29,11 +29,11 @@ namespace Picker3D.Scripts.Player
                 transform.Translate(Vector3.left * (skillObjectMoveSpeed * Time.deltaTime));
             }
 
-            if (transform.localPosition.x >= 4.0f)
+            if (transform.localPosition.x >= 5f)
             {
                 _direction = false;
             }
-            else if (transform.localPosition.x <= -4.0f) 
+            else if (transform.localPosition.x <= -5f) 
             {
                 _direction = true; 
             }

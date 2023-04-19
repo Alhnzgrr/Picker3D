@@ -247,8 +247,8 @@ MonoBehaviour:
   skillUsing: 0
   skillPosition: 0
   playerSkillObject: {fileID: 1699052731466767725}
-  skillStartPosition: {x: 0, y: 0, z: -0.75}
-  skillMiddlePosition: {x: 0, y: 0, z: 0}
+  skillStartPosition: {x: 0, y: 0, z: -0.6}
+  skillMiddlePosition: {x: 0, y: 0, z: -0.2}
   respawnTransform: {fileID: 37795776142293298}
 --- !u!1 &1699052731466767725
 GameObject:
@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9796e79d6d2847409655bc5582106bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillObjectMoveSpeed: 0
+  skillObjectMoveSpeed: 5
 --- !u!1 &6097654800962241293
 GameObject:
   m_ObjectHideFlags: 0

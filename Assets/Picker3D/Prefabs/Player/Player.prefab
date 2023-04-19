@@ -219,6 +219,7 @@ MonoBehaviour:
   playerSkills:
   - {fileID: 8663622391240390258}
   - {fileID: 3070110974506800054}
+  playerSkillActiveTime: 5
 --- !u!114 &343908633072306671
 MonoBehaviour:
   m_ObjectHideFlags: 0

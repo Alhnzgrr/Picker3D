@@ -12,6 +12,7 @@ namespace Picker3D.Scripts.General
         {
             base.Awake();
             _eventData = Resources.Load("EventData") as EventData;
+            Application.targetFrameRate = 60;
         }
 
         private void OnEnable()
