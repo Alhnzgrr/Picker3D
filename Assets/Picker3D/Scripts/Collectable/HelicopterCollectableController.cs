@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using Picker3D.Scripts.General;
+using Picker3D.Scripts.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Picker3D.Scripts.Collectable
         [SerializeField] private Collectable pyramidCollectable;
         [SerializeField] private float helicopterSpawnTime;
         [SerializeField] private float helicopterSpeed;
-        [SerializeField, Min(4), MaxValue(50)] private int spawnAmount;
+        [SerializeField, Min(20), MaxValue(30)] private int spawnAmount;
 
         private HelicopterVerticalMove _helicopterVerticalMove;
         
@@ -26,6 +27,15 @@ namespace Picker3D.Scripts.Collectable
 
         private void Update()
         {
+            if (!_canMove)
+            {
+                if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < 12.5f)
+                {
+                    _canMove = true;
+                    OnStartTastHelicopter();
+                }
+            }
+            
             if(!_canMove) return;
             
             if (_direction)
@@ -47,7 +57,7 @@ namespace Picker3D.Scripts.Collectable
             }
         }
 
-        public void OnStartTastHelicopter()
+        private void OnStartTastHelicopter()
         {
             StartCoroutine(OnStartTaskCoroutine());
         }
@@ -68,8 +78,8 @@ namespace Picker3D.Scripts.Collectable
             }
 
             _canMove = false;
-            _helicopterVerticalMove.CanMove = false;
             _helicopterVerticalMove.GetBackStartPosition();
+            _helicopterVerticalMove.CanMove = false;
         }
     }
 }

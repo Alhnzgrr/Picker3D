@@ -11,5 +11,6 @@ namespace Picker3D.Scripts.General
         public Action OnLoseLevel { get; set; }
         public Action OnStageCompete { get; set; }
         public Action OnResetValues{ get; set; }
+        public Action OnPlayerSkill { get; set; }
     }
 }

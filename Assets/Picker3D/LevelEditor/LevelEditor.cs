@@ -36,9 +36,15 @@ namespace Picker3D.LevelEditor
         [SerializeField] [ShowIf("roadType", RoadType.Flat)]
         private FlatCollectableType collectableType;
 
+        [SerializeField] [ShowIf("roadType", RoadType.Flat)]
+        private bool skillUsing;
+        
+        [SerializeField] [ShowIf("roadType", RoadType.Flat)]
+        private SkillPosition skillPosition;
+
         [SerializeField, Min(5)] [ShowIf("IsStage")]
         private int stageNecessaryAmount;
-
+       
         private bool IsStage => roadType == RoadType.Stage || roadType == RoadType.Finish;
 
         private GameObject _levelX = null;
@@ -111,6 +117,7 @@ namespace Picker3D.LevelEditor
                             if (CatchHelper.TryGetComponentThisOrChild(newObject, out FlatController flatController))
                             {
                                 flatController.GetFlatType(collectableType);
+                                flatController.GetSkillPositionType(skillPosition , skillUsing);
                             }
                             
                             Vector3 localScale = newObject.transform.localScale;

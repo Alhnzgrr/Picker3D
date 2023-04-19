@@ -60,6 +60,8 @@ namespace Picker3D.Scripts.Collectable
             foreach (var collectable in collectables)
             {
                 Collectable _collectable = collectable.GetComponent<Collectable>();
+                collectable.gameObject.SetActive(true);
+                
                 _collectable.GetRigidbodyForBreaberSphere();
                 _collectable.InstantlyGetBackDefaultPosition();
                 

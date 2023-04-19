@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Picker3D.Scripts.Collectable;
 using Picker3D.Scripts.General;
+using Picker3D.Scripts.Player;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,6 +13,7 @@ namespace Picker3D.Scripts.Road
     public class FlatController : MonoBehaviour
     {
         [Header("Collectables")]
+        [SerializeField] private FlatCollectableType flatCollectableType;
         [SerializeField] private GameObject pyramidCollectables;
         [SerializeField] private GameObject cubeCollectables;
         [SerializeField] private GameObject emojiCollectables;
@@ -19,9 +21,15 @@ namespace Picker3D.Scripts.Road
         [SerializeField] private GameObject duckCollectables;
         [SerializeField] private GameObject helicopterCollectables;
         [SerializeField] private GameObject breakerSphereCollectable;
-        
-        [SerializeField] private FlatCollectableType flatCollectableType;
 
+        [Header("SKILL")]
+        [SerializeField] private bool skillUsing;
+        [SerializeField] private SkillPosition skillPosition;
+        [SerializeField] private GameObject playerSkillObject;
+        [SerializeField] private Vector3 skillStartPosition;
+        [SerializeField] private Vector3 skillMiddlePosition;
+        
+        [Header("OTHER SETTINGS")]
         [SerializeField] private Transform respawnTransform;
         public Transform RespawnTransform => respawnTransform;
 
@@ -41,6 +49,7 @@ namespace Picker3D.Scripts.Road
             _eventData.OnResetValues += ResetRoad;
             
             GetCollectable().SetActive(true);
+            GetSkillPosition();
         }
 
         private void Start()
@@ -78,44 +87,34 @@ namespace Picker3D.Scripts.Road
                    flatCollectableType != FlatCollectableType.BreakerSphere;
         }
 
-        public void SetActivateCollectables()
-        {
-            switch (flatCollectableType)
-            {
-                case FlatCollectableType.Helicopter:
-                {
-                    if (!_helicopterCollectableController)
-                    {
-                        _helicopterCollectableController = GetComponentInChildren<HelicopterCollectableController>();
-                    }
-
-                    _helicopterCollectableController.OnStartTastHelicopter();
-                    break;
-                }
-                case FlatCollectableType.BreakerSphere:
-                {
-                    if (!_breakerSphereController)
-                    {
-                        _breakerSphereController =
-                            GetComponentInChildren<BreakerSphereController>();
-                    }
-
-                    break;
-                }
-            }
-        }
-
         public void ResetRoad()
         {
             foreach (var collectable in collectables)
             {
                 collectable.GetBackDefaultPosition();
             }
+            
+            GetSkillPosition();
+        }
+
+        private void GetSkillPosition()
+        {
+            if (!skillUsing) return;
+
+            playerSkillObject.transform.localPosition = skillPosition == SkillPosition.Start ? skillStartPosition : skillMiddlePosition;
+            
+            playerSkillObject.gameObject.SetActive(true);
         }
 
         public void GetFlatType(FlatCollectableType type)
         {
             flatCollectableType = type;
+        }
+
+        public void GetSkillPositionType(SkillPosition type , bool value)
+        {
+            skillUsing = value;
+            skillPosition = type;
         }
     }
 

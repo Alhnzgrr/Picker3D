@@ -18,4 +18,10 @@ namespace Picker3D.Scripts.General
         Helicopter,
         BreakerSphere
     }
+
+    public enum SkillPosition
+    {
+        Start,
+        Middle,
+    }
 }

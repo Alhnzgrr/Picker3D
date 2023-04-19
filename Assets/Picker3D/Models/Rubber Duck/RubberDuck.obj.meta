@@ -3,7 +3,12 @@ guid: 8f4dc59da00c042f7a9c25fdd4041acc
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RubberDuck_mat1
+    second: {fileID: 2100000, guid: 2e935a4b3e80c4a6cb652f8c04dc1cb9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

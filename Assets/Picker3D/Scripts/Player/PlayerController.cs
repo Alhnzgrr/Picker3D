@@ -11,6 +11,9 @@ namespace Picker3D.Scripts.Player
 {
     public class PlayerController : MonoSingleton<MonoBehaviour>
     {
+        [SerializeField] private PlayerSkillController[] playerSkills;
+        [SerializeField] private float playerSkillActiveTime;
+        
         private EventData _eventData;
         private PlayerMovement _playerMovement;
         private CollectableListController _collectableListController;
@@ -47,7 +50,6 @@ namespace Picker3D.Scripts.Player
 
             if (other.TryGetComponent(out Road.RoadController roadController))
             {
-                
                 if (roadController.IsInteraction) return;
                 
                 if (roadController.IsStage)
@@ -57,6 +59,7 @@ namespace Picker3D.Scripts.Player
                         stageRoad.CheckTotalAmount();
                     }
 
+                    SkillActivate(false);
                     _playerMovement.CanMove(false);
                     _collectableListController.StageAreaAction();
                 }
@@ -64,13 +67,18 @@ namespace Picker3D.Scripts.Player
                 {
                     if (CatchHelper.TryGetComponentThisOrChild(other.gameObject, out FlatController flatController))
                     {
-                        flatController.SetActivateCollectables();
                         flatController.ResetRoad();
                         _respawmTransform = flatController.RespawnTransform;
                     }
                 }
 
                 roadController.InteractionPlayer();
+            }
+
+            if (other.TryGetComponent(out PlayerSkillCollectObject playerSkillCollectObject))
+            {
+                playerSkillCollectObject.PlayerCatchTheSkillObject();
+                SkillActivate(true);
             }
         }
 
@@ -98,6 +106,16 @@ namespace Picker3D.Scripts.Player
         private void OnStageCompete()
         {
             _playerMovement.CanMove(true);
+        }
+
+        private void SkillActivate(bool value)
+        {
+            foreach (var obj in playerSkills)
+            {
+                obj.TimeUpdate(playerSkillActiveTime);
+                obj.transform.rotation = Quaternion.identity;
+                obj.gameObject.SetActive(value);
+            }
         }
 
         private void OnLevelFailed()
