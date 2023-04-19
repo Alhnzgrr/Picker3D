@@ -11,11 +11,10 @@ Material:
   m_Shader: {fileID: 4800000, guid: 6fc9318f5193c094c98c0d450cd61e3b, type: 3}
   m_ValidKeywords:
   - _BACKGROUNDMODE_COLORS
+  - _CLOUDSLITBYSUN_ON
   - _ENABLECLOUDSROTATION_ON
-  - _ENABLECLOUDS_ON
   - _ENABLESTARSTWINKLING_ON
   - _ENABLESTARS_ON
-  - _ENABLESUN_ON
   m_InvalidKeywords:
   - _DISABLEDIRECTIONLIGHT_ON
   - _ENABLESUNMOONMASK_ON
@@ -173,10 +172,10 @@ Material:
     - _BumpScale: 1
     - _CloudHeight: 0
     - _CloudsCat: 1
-    - _CloudsHeight: -0.061
-    - _CloudsIntensity: 1
-    - _CloudsLitbySun: 0
-    - _CloudsRotation: 360
+    - _CloudsHeight: -0.001
+    - _CloudsIntensity: 0.379
+    - _CloudsLitbySun: 1
+    - _CloudsRotation: 285
     - _CloudsRotationSpeed: 1
     - _Contrast: 0.477
     - _Contrsat: 1
@@ -188,7 +187,7 @@ Material:
     - _DstBlend: 0
     - _Enable1Twinkling: 0
     - _EnableBuiltinFog: 0
-    - _EnableClouds: 1
+    - _EnableClouds: 0
     - _EnableCloudsRotation: 1
     - _EnableDirectionLight: 0
     - _EnableFogMessage: 0
@@ -198,14 +197,14 @@ Material:
     - _EnableStars: 1
     - _EnableStarsRotation: 0
     - _EnableStarsTwinkling: 1
-    - _EnableSun: 1
+    - _EnableSun: 0
     - _EnableSunMask: 0
     - _EnableSunMoon: 1
     - _EnableSunMoonMask: 1
     - _EnableTwinkling: 0
     - _EqHeight: 0.419
-    - _EquatorHeight: 0.6
-    - _EquatorSmoothness: 0.376
+    - _EquatorHeight: 0.383
+    - _EquatorSmoothness: 0.052
     - _Exposure: 0
     - _Fade: 0.463
     - _Float0: 2.7
@@ -239,7 +238,7 @@ Material:
     - _SkyPatternContrast: 0.477
     - _SkyPatternOverlay: 0
     - _SkyboxCat: 1
-    - _SkyboxOffset: -0.28
+    - _SkyboxOffset: -0.17
     - _SkyboxRotation: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -248,11 +247,11 @@ Material:
     - _StarsBottomMask: 1
     - _StarsCat: 1
     - _StarsHeightMask: 0
-    - _StarsIntensity: 5
+    - _StarsIntensity: 1.23
     - _StarsLayer: 3
     - _StarsRotation: 360
     - _StarsRotationSpeed: 0.5
-    - _StarsSize: 0.99
+    - _StarsSize: 0.602
     - _StarsSunMask: 0.41
     - _SunCat: 1
     - _SunIntensity: 1.5
@@ -286,12 +285,12 @@ Material:
     - _Color2: {r: 0.059472326, g: 0.25068596, b: 0.8088235, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Eq: {r: 1, g: 0.6769777, b: 0.330882, a: 0}
-    - _EquatorColor: {r: 1, g: 0.5659999, b: 0, a: 0}
+    - _EquatorColor: {r: 0.6273585, g: 0.7450348, b: 1, a: 0}
     - _Ground: {r: 0.4779411, g: 0.43111518, b: 0.23545504, a: 0}
-    - _GroundColor: {r: 0.63235295, g: 0.72616625, b: 1, a: 0}
+    - _GroundColor: {r: 0.8066038, g: 0.85733056, b: 1, a: 0}
     - _MoonColor: {r: 1, g: 1, b: 1, a: 1}
     - _Sky: {r: 0.6691177, g: 0.29519898, b: 0.29519898, a: 0}
-    - _SkyColor: {r: 0.15895337, g: 0.30404058, b: 0.7169812, a: 0}
+    - _SkyColor: {r: 0.1745283, g: 0.38853943, b: 1, a: 0}
     - _SkyboxRotationAxis: {r: 0, g: 1, b: 0, a: 0}
     - _Skycol: {r: 0.27941146, g: 0.64219046, b: 1, a: 0}
     - _StarsRotationAxis: {r: 0, g: 1, b: 0, a: 0}
