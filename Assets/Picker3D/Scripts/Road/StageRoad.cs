@@ -69,7 +69,7 @@ namespace Picker3D.Scripts.Road
         private IEnumerator CheckTotalAmountCoroutine()
         {
             
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.5f);
 
             if (_totalAmount < collectAmount)
             {

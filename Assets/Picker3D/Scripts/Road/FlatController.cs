@@ -22,6 +22,9 @@ namespace Picker3D.Scripts.Road
         
         [SerializeField] private FlatCollectableType flatCollectableType;
 
+        [SerializeField] private Transform respawnTransform;
+        public Transform RespawnTransform => respawnTransform;
+
         private EventData _eventData;
         private HelicopterCollectableController _helicopterCollectableController;
         private BreakerSphereController _breakerSphereController;
@@ -97,7 +100,7 @@ namespace Picker3D.Scripts.Road
                             GetComponentInChildren<BreakerSphereController>();
                     }
 
-                    _breakerSphereController.OnStartTaskBreakerSphere();
+                    // _breakerSphereController.OnStartTaskBreakerSphere();
                     break;
                 }
             }

@@ -12,10 +12,6 @@ namespace Picker3D.Scripts.Road
         [SerializeField] private bool isStage;
         [SerializeField] private bool isFinish;
 
-        private EventData _eventData;
-
-        
-
         public bool IsStage
         {
             get => isStage;
@@ -29,21 +25,6 @@ namespace Picker3D.Scripts.Road
         }
 
         public bool IsInteraction { get; private set; }
-
-        // private void Awake()
-        // {
-        //     _eventData = Resources.Load("EventData") as EventData;
-        // }
-        //
-        // private void OnEnable()
-        // {
-        //     _eventData.OnResetValues += OnResetValues;
-        // }
-        //
-        // private void OnDisable()
-        // {
-        //     _eventData.OnResetValues -= OnResetValues;
-        // }
 
         public void OnResetValues()
         {

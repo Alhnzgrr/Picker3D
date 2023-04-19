@@ -65,6 +65,11 @@ namespace Picker3D.Scripts.Collectable
             transform.localPosition = _spawnPosition;
         }
 
+        public void GetRigidbodyForBreaberSphere()
+        {
+            if(!_rigidbody)  _rigidbody = GetComponent<Rigidbody>();
+        }
+
         public void DestroyAfterLifeTime()
         {
             Destroy(gameObject , 20);

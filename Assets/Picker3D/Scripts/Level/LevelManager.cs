@@ -15,7 +15,7 @@ namespace Picker3D.LevelSystem
         private int _lastLevelIndex;
         private EventData _eventData;
 
-        private int Level
+        public int Level
         {
             get => PlayerPrefs.GetInt("Level");
             set => PlayerPrefs.SetInt("Level", value);

@@ -32,31 +32,11 @@ namespace Picker3D.Scripts.Movement
             {
                 Move();
             }
-
-            // if (CanHorizontalMove())
-            // {
-            //     _rigidbody.velocity =
-            //         new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, verticalSpeed);
-            // }
-            // else
-            // {
-            //     _rigidbody.velocity = Vector3.forward * verticalSpeed;
-            // }
         }
 
         private void Move()
         {
-            if (CanHorizontalMove())
-            {
-                _rigidbody.velocity = new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, verticalSpeed);
-            }
-            else
-            {
-                _rigidbody.velocity = new Vector3(0, 0, verticalSpeed);
-            }
-            
-            Debug.Log(CanHorizontalMove());
-
+            _rigidbody.velocity = CanHorizontalMove() ? new Vector3(UIController.Instance.GetHorizontal() * horizontalSpeed, 0, verticalSpeed) : new Vector3(0, 0, verticalSpeed);
         }
 
         public void CanMove(bool value)

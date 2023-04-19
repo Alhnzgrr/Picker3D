@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Picker3D.Scripts.General;
+using Picker3D.Scripts.Player;
 using UnityEngine;
 
 namespace Picker3D.Scripts.Collectable
@@ -14,6 +15,8 @@ namespace Picker3D.Scripts.Collectable
 
         private EventData _eventData;
         private Vector3 bigSphereDefaultPosition;
+        
+        private bool _isActive = false;
 
         private void Awake()
         {
@@ -28,6 +31,17 @@ namespace Picker3D.Scripts.Collectable
         private void OnDisable()
         {
             _eventData.OnResetValues -= OnEndTask;
+        }
+
+        private void Update()
+        {
+            if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < 10f)
+            {
+                if(_isActive) return;
+                
+                OnStartTask();
+                _isActive = true;
+            }
         }
 
         public void OnStartTask()
@@ -46,6 +60,7 @@ namespace Picker3D.Scripts.Collectable
             foreach (var collectable in collectables)
             {
                 Collectable _collectable = collectable.GetComponent<Collectable>();
+                _collectable.GetRigidbodyForBreaberSphere();
                 _collectable.InstantlyGetBackDefaultPosition();
                 
                 collectable.SetActive(false);
@@ -53,6 +68,7 @@ namespace Picker3D.Scripts.Collectable
             
             bigSphere.transform.localPosition = bigSphereDefaultPosition;
             bigSphere.SetActive(true);
+            _isActive = false;
         }
     }
 }

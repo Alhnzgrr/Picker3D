@@ -1,6 +1,5 @@
-﻿using System;
-using DG.Tweening;
-using Dreamteck.Splines.Primitives;
+﻿using DG.Tweening;
+using Picker3D.LevelSystem;
 using Picker3D.Scripts.General;
 using TMPro;
 using UnityEngine;
@@ -26,6 +25,7 @@ namespace Picker3D.Game
         [Header("BUTTONS")]
         [SerializeField] private Button playButton;
         [SerializeField] private Button nextLevelButton;
+        [SerializeField] private Button playAgainButton;
 
         [Header("JOYSTICK")]
         [SerializeField] private Joystick joystick;
@@ -49,6 +49,7 @@ namespace Picker3D.Game
         {
             playButton.onClick?.AddListener(PlayButtonClick);
             nextLevelButton.onClick?.AddListener(NextLevelButtonClick);
+            playAgainButton.onClick?.AddListener(PlayAgainButtonClick);
             
             _eventData.OnStageCompete += OnStageComplete;
             _eventData.OnLoseLevel += OnLevelFailed;
@@ -58,16 +59,27 @@ namespace Picker3D.Game
         private void Start()
         {
             joystick.gameObject.SetActive(false);
+
+            TextUpdate();
         }
 
         private void OnDisable()
         {
            playButton.onClick?.RemoveListener(PlayButtonClick);
            nextLevelButton.onClick?.RemoveListener(NextLevelButtonClick);
+           playAgainButton.onClick?.RemoveListener(PlayAgainButtonClick);
            
            _eventData.OnStageCompete -= OnStageComplete;
            _eventData.OnLoseLevel -= OnLevelFailed;
            _eventData.OnFinishLevel -= OnFinish;
+        }
+
+        private void PlayAgainButtonClick()
+        {
+            losePanel.SetActive(false);
+            startPanel.SetActive(true);
+            
+            _eventData.OnResetValues?.Invoke();
         }
 
         private void PlayButtonClick()
@@ -82,16 +94,19 @@ namespace Picker3D.Game
         {
             _eventData.OnPlay?.Invoke();
             _eventData.OnResetValues?.Invoke();
-            
+
+            NextLevelUpdates();
             gamePanel.SetActive(true);
             levelCompetePanel.SetActive(false);
-            stageIndex = 0;
+            joystick.gameObject.SetActive(true);
+            
         }
         
         private void OnFinish()
         {
             levelCompetePanel.SetActive(true);
             gamePanel.SetActive(false);
+            joystick.gameObject.SetActive(false);
         }
         
         private void OnStageComplete()
@@ -113,17 +128,35 @@ namespace Picker3D.Game
 
         private void OnLevelFailed()
         {
-            stageIndex = 0;
+            losePanel.SetActive(true);
+            gamePanel.SetActive(false);
+            joystick.gameObject.SetActive(false);
+        }
 
+        public float GetHorizontal()
+        {
+            return joystick.Horizontal;
+        }
+
+        private void NextLevelUpdates()
+        {
+            TextUpdate();
+            
+            stageIndex = 0;
+            
             foreach (var image in stageImages)
             {
                 image.color = Color.white;
             }
         }
 
-        public float GetHorizontal()
+        private void TextUpdate()
         {
-            return joystick.Horizontal;
+            int level = LevelManager.Instance.Level + 1;
+            int nextLevel = level + 1;
+            
+            levelText.text = level.ToString();
+            nextLevelText.text = nextLevel.ToString();
         }
     }
 }

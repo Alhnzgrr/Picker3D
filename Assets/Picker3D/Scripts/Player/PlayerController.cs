@@ -1,3 +1,6 @@
+using System;
+using DG.Tweening;
+using Dreamteck.Splines.Primitives;
 using Picker3D.Helper;
 using Picker3D.Scripts.General;
 using Picker3D.Scripts.Movement;
@@ -6,14 +9,17 @@ using UnityEngine;
 
 namespace Picker3D.Scripts.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoSingleton<MonoBehaviour>
     {
         private EventData _eventData;
         private PlayerMovement _playerMovement;
         private CollectableListController _collectableListController;
+        private Transform _respawmTransform;
+        private Vector3 defaultPosition;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _eventData = Resources.Load("EventData") as EventData;
             _playerMovement = GetComponent<PlayerMovement>();
             _collectableListController = GetComponent<CollectableListController>();
@@ -22,6 +28,13 @@ namespace Picker3D.Scripts.Player
         private void OnEnable()
         {
             _eventData.OnStageCompete += OnStageCompete;
+            _eventData.OnLoseLevel += OnLevelFailed;
+            _eventData.OnPlay += OnStageCompete;
+        }
+
+        private void Start()
+        {
+            defaultPosition = transform.position;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -53,6 +66,7 @@ namespace Picker3D.Scripts.Player
                     {
                         flatController.SetActivateCollectables();
                         flatController.ResetRoad();
+                        _respawmTransform = flatController.RespawnTransform;
                     }
                 }
 
@@ -77,11 +91,19 @@ namespace Picker3D.Scripts.Player
         private void OnDisable()
         {
             _eventData.OnStageCompete -= OnStageCompete;
+            _eventData.OnLoseLevel -= OnLevelFailed;
+            _eventData.OnPlay -= OnStageCompete;
         }
 
         private void OnStageCompete()
         {
             _playerMovement.CanMove(true);
+        }
+
+        private void OnLevelFailed()
+        {
+            transform.position = _respawmTransform ? 
+                new Vector3(0, transform.position.y, _respawmTransform.position.z) : defaultPosition;
         }
     }
 }

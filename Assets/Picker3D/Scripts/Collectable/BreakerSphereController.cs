@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Dreamteck.Splines.Primitives;
-using Sirenix.Utilities;
+using Picker3D.Scripts.General;
+using Picker3D.Scripts.Player;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Networking.PlayerConnection;
 
 namespace Picker3D.Scripts.Collectable
 {
@@ -21,7 +21,7 @@ namespace Picker3D.Scripts.Collectable
         {
             for (int i = 0; i < breakerSpheres.Length; i++)
             {
-                yield return new WaitForSeconds(2.25f);
+                yield return new WaitForSeconds(0.25f);
 
                 breakerSpheres[i].OnStartTask();
                 
